@@ -10,7 +10,6 @@ public class UserModel {
     private String EmailAddress;
     private String MobileNumber;
     private String Password;
-    private String reEnterdPassword;
     private String Address;
 
     public String getFirstName() {
@@ -33,9 +32,6 @@ public class UserModel {
         return Password;
     }
 
-    public String getReEnterdPassword() {
-        return reEnterdPassword;
-    }
 
     public String getAddress() {
         return Address;
@@ -59,10 +55,6 @@ public class UserModel {
 
     public void setPassword(String password) {
         Password = password;
-    }
-
-    public void setReEnterdPassword(String reEnterdPassword) {
-        this.reEnterdPassword = reEnterdPassword;
     }
 
     public void setAddress(String address) {

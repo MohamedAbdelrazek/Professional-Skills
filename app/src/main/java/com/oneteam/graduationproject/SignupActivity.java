@@ -25,9 +25,6 @@ import org.json.JSONObject;
 import java.util.HashMap;
 import java.util.Map;
 
-import javax.net.ssl.HostnameVerifier;
-import javax.net.ssl.SSLSession;
-
 import butterknife.ButterKnife;
 import butterknife.Bind;
 
@@ -38,12 +35,12 @@ import static com.oneteam.graduationproject.Utils.Constant.KEY_PASSWORD;
 import static com.oneteam.graduationproject.Utils.Constant.KEY_PHONE;
 
 public class SignupActivity extends AppCompatActivity {
+    private static final String TAG = "SignupActivity";
+
     @Bind(R.id.input_email)
     EditText zEmailAddress;
     @Bind(R.id.input_password)
     EditText zPassword;
-    @Bind(R.id.input_reEnterPassword)
-    EditText zReEnterPassword;
     @Bind(R.id.first_name)
     EditText zFirstName;
     @Bind(R.id.last_name)
@@ -55,9 +52,10 @@ public class SignupActivity extends AppCompatActivity {
     @Bind(R.id.btn_signup)
     Button zCreatAccount;
     @Bind(R.id.link_login)
-    TextView zLoginLink;
-    UserModel zUser;
-    ProgressDialog progressDialog;
+     TextView zLoginLink;
+    private UserModel zUser;
+    private ProgressDialog progressDialog;
+
     @Override
     public void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
@@ -84,18 +82,19 @@ public class SignupActivity extends AppCompatActivity {
     }
 
     public void signup() {
-       if (!validate()) {
+        if (!validate()) {
             onSignupFailed();
-        return;
-       }
+            return;
+        }
 
-    //    zCreatAccount.setEnabled(false);
+        zCreatAccount.setEnabled(false);
 
-          progressDialog = new ProgressDialog(SignupActivity.this,
+        progressDialog = new ProgressDialog(SignupActivity.this,
                 R.style.AppTheme_Dark_Dialog);
         progressDialog.setIndeterminate(true);
         progressDialog.setMessage("Creating Account...");
         progressDialog.show();
+
         JSONObject JS = new JSONObject();
         try {
 
@@ -108,17 +107,16 @@ public class SignupActivity extends AppCompatActivity {
 
 
         } catch (JSONException e) {
-
+            e.printStackTrace();
         }
-        final String REGISTER_URL = "https://www.professionalskills.eu-gb.mybluemix.net/restapi/user/register";
+        final String REGISTER_URL = "https://professionalskills.eu-gb.mybluemix.net/restapi/user/register";
         JsonObjectRequest jsonObjReq = new JsonObjectRequest(
                 Request.Method.POST, REGISTER_URL, JS,
                 new Response.Listener<JSONObject>() {
 
                     @Override
                     public void onResponse(JSONObject response) {
-                        Toast.makeText(SignupActivity.this, "RESPonce" + response, Toast.LENGTH_SHORT).show();
-                        progressDialog.dismiss();
+                        checkSignupState(response.toString());
 
                     }
                 }, new Response.ErrorListener() {
@@ -126,8 +124,6 @@ public class SignupActivity extends AppCompatActivity {
 
             @Override
             public void onErrorResponse(VolleyError error) {
-                Toast.makeText(SignupActivity.this, "" + error.toString(), Toast.LENGTH_SHORT).show();
-                Log.i("ZOKA", "Error " + error.toString());
 
 
             }
@@ -147,6 +143,30 @@ public class SignupActivity extends AppCompatActivity {
         };
         // Adding request to request queue
         Volley.newRequestQueue(this).add(jsonObjReq);
+        progressDialog.dismiss();
+    }
+
+    private void checkSignupState(String JsonString) {
+        JSONObject _json = null;
+        try {
+            _json = new JSONObject(JsonString);
+        } catch (JSONException e) {
+
+        }
+        try {
+            if (_json.getBoolean("statue")) {
+                Toast.makeText(this, "SignedUp!", Toast.LENGTH_SHORT).show();
+                progressDialog.dismiss();
+                finish();
+            } else {
+                Toast.makeText(this, _json.getString("error_message"), Toast.LENGTH_SHORT).show();
+                progressDialog.dismiss();
+                zCreatAccount.setEnabled(false);
+            }
+        } catch (JSONException e) {
+            e.printStackTrace();
+        }
+
     }
 
 
@@ -157,7 +177,7 @@ public class SignupActivity extends AppCompatActivity {
     }
 
     public void onSignupFailed() {
-        Toast.makeText(getBaseContext(), "signup failed", Toast.LENGTH_LONG).show();
+        Toast.makeText(getBaseContext(), "signUp failed", Toast.LENGTH_LONG).show();
 
         zCreatAccount.setEnabled(true);
     }
@@ -171,7 +191,6 @@ public class SignupActivity extends AppCompatActivity {
         zUser.setAddress(zAddress.getText().toString());
         zUser.setEmailAddress(zEmailAddress.getText().toString());
         zUser.setMobileNumber(zMobileNumber.getText().toString());
-        zUser.setReEnterdPassword(zReEnterPassword.getText().toString());
         zUser.setPassword(zPassword.getText().toString());
 
         if (zUser.getFirstName().isEmpty() || zUser.getFirstName().length() < 3) {
@@ -209,18 +228,6 @@ public class SignupActivity extends AppCompatActivity {
             zPassword.setError(null);
         }
 
-        if (zUser.getReEnterdPassword().isEmpty() || zUser.getReEnterdPassword().length() < 6 || !(zUser.getReEnterdPassword().equals(zUser.getPassword()))) {
-            zReEnterPassword.setError("Password Does not match");
-            valid = false;
-        } else {
-            zReEnterPassword.setError(null);
-        }
-
         return valid;
-    }
-
-    @Override
-    public void onBackPressed() {
-        startActivity(new Intent(this,LoginActivity.class));
     }
 }
