@@ -25,6 +25,9 @@ import org.json.JSONObject;
 import java.util.HashMap;
 import java.util.Map;
 
+import javax.net.ssl.HostnameVerifier;
+import javax.net.ssl.SSLSession;
+
 import butterknife.ButterKnife;
 import butterknife.Bind;
 
@@ -35,8 +38,6 @@ import static com.oneteam.graduationproject.Utils.Constant.KEY_PASSWORD;
 import static com.oneteam.graduationproject.Utils.Constant.KEY_PHONE;
 
 public class SignupActivity extends AppCompatActivity {
-    private static final String TAG = "SignupActivity";
-
     @Bind(R.id.input_email)
     EditText zEmailAddress;
     @Bind(R.id.input_password)
@@ -56,7 +57,7 @@ public class SignupActivity extends AppCompatActivity {
     @Bind(R.id.link_login)
     TextView zLoginLink;
     UserModel zUser;
-
+    ProgressDialog progressDialog;
     @Override
     public void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
@@ -83,19 +84,18 @@ public class SignupActivity extends AppCompatActivity {
     }
 
     public void signup() {
-        if (!validate()) {
+       if (!validate()) {
             onSignupFailed();
-            return;
-        }
+        return;
+       }
 
-        //  zCreatAccount.setEnabled(false);
+    //    zCreatAccount.setEnabled(false);
 
-        final ProgressDialog progressDialog = new ProgressDialog(SignupActivity.this,
+          progressDialog = new ProgressDialog(SignupActivity.this,
                 R.style.AppTheme_Dark_Dialog);
         progressDialog.setIndeterminate(true);
         progressDialog.setMessage("Creating Account...");
         progressDialog.show();
-
         JSONObject JS = new JSONObject();
         try {
 
@@ -105,15 +105,12 @@ public class SignupActivity extends AppCompatActivity {
             JS.put(KEY_L_NAME, zUser.getLastName());
             JS.put(KEY_PHONE, zUser.getMobileNumber());
             JS.put(KEY_ADDRESS, zUser.getAddress());
-            JS.put("mainSkill", "Java");
-
-            // Log.i("ZOKA",""+JS.toString());
 
 
         } catch (JSONException e) {
-            e.printStackTrace();
+
         }
-        final String REGISTER_URL = "https://professionalskills.eu-gb.mybluemix.net/restapi/user/register";
+        final String REGISTER_URL = "https://www.professionalskills.eu-gb.mybluemix.net/restapi/user/register";
         JsonObjectRequest jsonObjReq = new JsonObjectRequest(
                 Request.Method.POST, REGISTER_URL, JS,
                 new Response.Listener<JSONObject>() {
@@ -121,8 +118,7 @@ public class SignupActivity extends AppCompatActivity {
                     @Override
                     public void onResponse(JSONObject response) {
                         Toast.makeText(SignupActivity.this, "RESPonce" + response, Toast.LENGTH_SHORT).show();
-                        Log.i("ZOKA", "Responce " + response.toString());
-                        Log.i("ZOKA", "" + REGISTER_URL);
+                        progressDialog.dismiss();
 
                     }
                 }, new Response.ErrorListener() {
@@ -151,7 +147,6 @@ public class SignupActivity extends AppCompatActivity {
         };
         // Adding request to request queue
         Volley.newRequestQueue(this).add(jsonObjReq);
-        progressDialog.dismiss();
     }
 
 
@@ -162,7 +157,7 @@ public class SignupActivity extends AppCompatActivity {
     }
 
     public void onSignupFailed() {
-        Toast.makeText(getBaseContext(), "Login failed", Toast.LENGTH_LONG).show();
+        Toast.makeText(getBaseContext(), "signup failed", Toast.LENGTH_LONG).show();
 
         zCreatAccount.setEnabled(true);
     }
@@ -222,5 +217,10 @@ public class SignupActivity extends AppCompatActivity {
         }
 
         return valid;
+    }
+
+    @Override
+    public void onBackPressed() {
+        startActivity(new Intent(this,LoginActivity.class));
     }
 }
