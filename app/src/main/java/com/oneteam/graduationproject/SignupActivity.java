@@ -33,9 +33,9 @@ import static com.oneteam.graduationproject.Utils.Constant.KEY_F_NAME;
 import static com.oneteam.graduationproject.Utils.Constant.KEY_L_NAME;
 import static com.oneteam.graduationproject.Utils.Constant.KEY_PASSWORD;
 import static com.oneteam.graduationproject.Utils.Constant.KEY_PHONE;
+import static com.oneteam.graduationproject.Utils.Constant.REGISTER_URL;
 
 public class SignupActivity extends AppCompatActivity {
-    private static final String TAG = "SignupActivity";
 
     @Bind(R.id.input_email)
     EditText zEmailAddress;
@@ -109,7 +109,6 @@ public class SignupActivity extends AppCompatActivity {
         } catch (JSONException e) {
             e.printStackTrace();
         }
-        final String REGISTER_URL = "https://professionalskills.eu-gb.mybluemix.net/restapi/user/register";
         JsonObjectRequest jsonObjReq = new JsonObjectRequest(
                 Request.Method.POST, REGISTER_URL, JS,
                 new Response.Listener<JSONObject>() {
@@ -124,7 +123,8 @@ public class SignupActivity extends AppCompatActivity {
 
             @Override
             public void onErrorResponse(VolleyError error) {
-
+                zCreatAccount.setEnabled(true);
+                Toast.makeText(SignupActivity.this, "an error occured !", Toast.LENGTH_SHORT).show();
 
             }
 
@@ -143,7 +143,6 @@ public class SignupActivity extends AppCompatActivity {
         };
         // Adding request to request queue
         Volley.newRequestQueue(this).add(jsonObjReq);
-        progressDialog.dismiss();
     }
 
     private void checkSignupState(String JsonString) {
@@ -161,7 +160,7 @@ public class SignupActivity extends AppCompatActivity {
             } else {
                 Toast.makeText(this, _json.getString("error_message"), Toast.LENGTH_SHORT).show();
                 progressDialog.dismiss();
-                zCreatAccount.setEnabled(false);
+                zCreatAccount.setEnabled(true);
             }
         } catch (JSONException e) {
             e.printStackTrace();
@@ -169,12 +168,6 @@ public class SignupActivity extends AppCompatActivity {
 
     }
 
-
-    public void onSignupSuccess() {
-        zCreatAccount.setEnabled(true);
-        setResult(RESULT_OK, null);
-        finish();
-    }
 
     public void onSignupFailed() {
         Toast.makeText(getBaseContext(), "signUp failed", Toast.LENGTH_LONG).show();
@@ -205,22 +198,18 @@ public class SignupActivity extends AppCompatActivity {
         } else {
             ZLastName.setError(null);
         }
-
-
         if (zUser.getEmailAddress().isEmpty() || !android.util.Patterns.EMAIL_ADDRESS.matcher(zUser.getEmailAddress()).matches()) {
             zEmailAddress.setError("enter a valid email address");
             valid = false;
         } else {
             zEmailAddress.setError(null);
         }
-
         if (zUser.getMobileNumber().isEmpty()) {
             zMobileNumber.setError("Enter Valid Mobile Number");
             valid = false;
         } else {
             zMobileNumber.setError(null);
         }
-
         if (zUser.getPassword().isEmpty() || zUser.getPassword().length() < 6) {
             zPassword.setError("password is Too short !");
             valid = false;
