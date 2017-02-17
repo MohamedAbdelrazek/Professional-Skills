@@ -118,12 +118,15 @@ public class LoginActivity extends AppCompatActivity implements LoaderManager.Lo
         String email = _emailText.getText().toString();
         String password = _passwordText.getText().toString();
 
-        if (email.isEmpty() || !android.util.Patterns.EMAIL_ADDRESS.matcher(email).matches()) {
+
+        // I disabled checking for email format to be able to send usernames
+
+        /*if (email.isEmpty() || !android.util.Patterns.EMAIL_ADDRESS.matcher(email).matches()) {
             _emailText.setError("Enter a valid email address");
             valid = false;
         } else {
             _emailText.setError(null);
-        }
+        }*/
 
         if (password.isEmpty() || password.length() < 6) {
             _passwordText.setError("Password is too short !");
@@ -157,11 +160,11 @@ public class LoginActivity extends AppCompatActivity implements LoaderManager.Lo
                 String jsonLoginRespose = null;
                 try {
                     jsonLoginRespose = NetworkUtils.getLoginResponse(url);
-                    return NetworkUtils.getStatus(jsonLoginRespose);
+                   return NetworkUtils.getStatus(jsonLoginRespose);
                 }catch (IOException e){
                     Log.e("Error:", "Error making login request");
+                    return null;
                 }
-                return null;
             }
 
             @Override
