@@ -3,29 +3,29 @@ package com.oneteam.graduationproject;
 import android.app.ProgressDialog;
 import android.content.Intent;
 import android.os.Bundle;
+import android.support.v4.app.LoaderManager;
+import android.support.v4.content.AsyncTaskLoader;
+import android.support.v4.content.Loader;
 import android.support.v7.app.AppCompatActivity;
+import android.util.Log;
 import android.view.View;
 import android.widget.Button;
 import android.widget.EditText;
 import android.widget.TextView;
 import android.widget.Toast;
 
-import com.android.volley.Request;
-import com.android.volley.Response;
-import com.android.volley.VolleyError;
-import com.android.volley.toolbox.JsonObjectRequest;
-import com.android.volley.toolbox.Volley;
 import com.oneteam.graduationproject.Utils.NetworkUtils;
 
-import org.json.JSONException;
-import org.json.JSONObject;
-
+import java.io.IOException;
 import java.net.URL;
 
 import butterknife.Bind;
 import butterknife.ButterKnife;
 
-public class LoginActivity extends AppCompatActivity {
+public class LoginActivity extends AppCompatActivity implements LoaderManager.LoaderCallbacks<Boolean>{
+
+    public int LOGIN_LOADER_ID = 22;
+
     @Bind(R.id.input_email)
     EditText _emailText;
     @Bind(R.id.input_password)
@@ -60,9 +60,10 @@ public class LoginActivity extends AppCompatActivity {
                 startActivity(intent);
                 overridePendingTransition(R.anim.push_left_in, R.anim.push_left_out);
                 finish();
-
             }
         });
+
+
     }
 
     public void login() {
@@ -77,41 +78,17 @@ public class LoginActivity extends AppCompatActivity {
         progressDialog.setIndeterminate(true);
         progressDialog.setMessage("Authenticating...");
         progressDialog.show();
-        String email = _emailText.getText().toString();
-        String password = _passwordText.getText().toString();
 
-        URL url = NetworkUtils.buildLoginUrl(email, password);
+        int loaderId = LOGIN_LOADER_ID;
 
-        JsonObjectRequest jsObjRequest = new JsonObjectRequest
-                (Request.Method.GET, url.toString(), null, new Response.Listener<JSONObject>() {
-
-                    @Override
-                    public void onResponse(JSONObject response) {
-                        CheckIfAuthorized(response.toString());
-                    }
-                }, new Response.ErrorListener() {
-
-                    @Override
-                    public void onErrorResponse(VolleyError error) {
-                        // TODO Auto-generated method stub
-
-
-                    }
-                });
-
-        Volley.newRequestQueue(this).add(jsObjRequest);
+        LoaderManager.LoaderCallbacks<Boolean> callback = this;
+        getSupportLoaderManager().initLoader(loaderId, null, callback);
 
     }
 
-    private void CheckIfAuthorized(String JsonString) {
-        JSONObject _json = null;
-        try {
-            _json = new JSONObject(JsonString);
-        } catch (JSONException e) {
+    private void checkIfAuthorized(Boolean status) {
 
-        }
-        try {
-            if (_json.getBoolean("statue")) {
+            if (status) {
                 Toast.makeText(this, "Authoized !", Toast.LENGTH_SHORT).show();
                 progressDialog.dismiss();
                 finish();
@@ -120,9 +97,6 @@ public class LoginActivity extends AppCompatActivity {
                 progressDialog.dismiss();
                 _loginButton.setEnabled(true);
             }
-        } catch (JSONException e) {
-            e.printStackTrace();
-        }
 
     }
 
@@ -159,5 +133,53 @@ public class LoginActivity extends AppCompatActivity {
         }
 
         return valid;
+    }
+
+    @Override
+    public Loader<Boolean> onCreateLoader(int id, final Bundle args) {
+        return new AsyncTaskLoader<Boolean>(this) {
+            boolean status;
+
+            @Override
+            protected void onStartLoading() {
+                if(args != null)
+                    deliverResult(status);
+                else
+                    forceLoad();
+            }
+
+            @Override
+            public Boolean loadInBackground() {
+                String email = _emailText.getText().toString();
+                String password = _passwordText.getText().toString();
+
+                URL url = NetworkUtils.buildLoginUrl(email, password);
+                String jsonLoginRespose = null;
+                try {
+                    jsonLoginRespose = NetworkUtils.getLoginResponse(url);
+                    return NetworkUtils.getStatus(jsonLoginRespose);
+                }catch (IOException e){
+                    Log.e("Error:", "Error making login request");
+                }
+                return null;
+            }
+
+            @Override
+            public void deliverResult(Boolean data) {
+                status = data;
+                super.deliverResult(data);
+            }
+        };
+    }
+
+    @Override
+    public void onLoadFinished(Loader<Boolean> loader, Boolean data) {
+        checkIfAuthorized(data);
+
+    }
+
+    @Override
+    public void onLoaderReset(Loader<Boolean> loader) {
+
     }
 }
