@@ -123,20 +123,20 @@ public class LoginActivity extends AppCompatActivity implements LoaderManager.Lo
     public boolean validate() {
         boolean valid = true;
 
-        String email = _emailText.getText().toString();
-        String password = _passwordText.getText().toString();
+         zEmail = _emailText.getText().toString();
+        zPassword = _passwordText.getText().toString();
 
 
         // I disabled checking for email format to be able to send usernames
 
-        /*if (email.isEmpty() || !android.util.Patterns.EMAIL_ADDRESS.matcher(email).matches()) {
+        /*if (zEmail.isEmpty() || !android.util.Patterns.EMAIL_ADDRESS.matcher(zEmail).matches()) {
             _emailText.setError("Enter a valid email address");
             valid = false;
         } else {
             _emailText.setError(null);
         }*/
 
-        if (password.isEmpty() || password.length() < 6) {
+        if (zPassword.isEmpty() || zPassword.length() < 6) {
             _passwordText.setError("Password is too short !");
             valid = false;
         } else {
