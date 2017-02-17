@@ -2,7 +2,6 @@ package com.oneteam.graduationproject;
 
 import android.app.ProgressDialog;
 import android.content.Intent;
-import android.net.Uri;
 import android.os.Bundle;
 import android.support.v7.app.AppCompatActivity;
 import android.view.View;
@@ -16,17 +15,15 @@ import com.android.volley.Response;
 import com.android.volley.VolleyError;
 import com.android.volley.toolbox.JsonObjectRequest;
 import com.android.volley.toolbox.Volley;
+import com.oneteam.graduationproject.Utils.NetworkUtils;
 
 import org.json.JSONException;
 import org.json.JSONObject;
 
-import java.net.MalformedURLException;
 import java.net.URL;
 
 import butterknife.Bind;
 import butterknife.ButterKnife;
-
-import static com.oneteam.graduationproject.Utils.Constant.LOGIN_URL;
 
 public class LoginActivity extends AppCompatActivity {
     @Bind(R.id.input_email)
@@ -37,8 +34,7 @@ public class LoginActivity extends AppCompatActivity {
     Button _loginButton;
     @Bind(R.id.link_signup)
     TextView _signupLink;
-    final String KEY_USERNAME = "username";
-    final String KEY_PASSWORD = "password";
+
     ProgressDialog progressDialog;
 
     @Override
@@ -83,16 +79,8 @@ public class LoginActivity extends AppCompatActivity {
         progressDialog.show();
         String email = _emailText.getText().toString();
         String password = _passwordText.getText().toString();
-        Uri builtUri = Uri.parse(LOGIN_URL).buildUpon()
-                .appendQueryParameter(KEY_USERNAME, email)
-                .appendQueryParameter(KEY_PASSWORD, password)
-                .build();
-        URL url = null;
-        try {
-            url = new URL(builtUri.toString());
-        } catch (MalformedURLException e) {
 
-        }
+        URL url = NetworkUtils.buildLoginUrl(email, password);
 
         JsonObjectRequest jsObjRequest = new JsonObjectRequest
                 (Request.Method.GET, url.toString(), null, new Response.Listener<JSONObject>() {
