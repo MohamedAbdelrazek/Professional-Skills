@@ -12,7 +12,7 @@ public class MainActivity extends AppCompatActivity {
         setContentView(R.layout.activity_main);
         zUserSession = new UserSession(this);
         // checking if the user already has email and password
-        //if there is no data this func will launch the login activity && if not it does nothing 
+        //if there is no data this func will launch the login activity && if not it does nothing
         zUserSession.checkLogin();
 
     }
