@@ -9,7 +9,10 @@ public class MainActivity extends AppCompatActivity {
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
-       setContentView(R.layout.activity_main);
+        setContentView(R.layout.activity_main);
+
+        // TODO: Before starting the LoginActivity check if the user is authorized or not
+
         Intent intent = new Intent(this, LoginActivity.class);
         startActivity(intent);
     }
