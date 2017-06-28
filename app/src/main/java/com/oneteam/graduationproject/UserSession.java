@@ -44,7 +44,7 @@ public class UserSession {
         // Check login status
         if (this.isLoggedIn()) {
             // user is not logged in redirect him to Login Activity
-            zContext.startActivity(new Intent(zContext, MainActivity.class).addFlags(Intent.FLAG_ACTIVITY_CLEAR_TOP)
+            zContext.startActivity(new Intent(zContext, HomeActivity.class).addFlags(Intent.FLAG_ACTIVITY_CLEAR_TOP)
                     .setFlags(Intent.FLAG_ACTIVITY_NEW_TASK));
         }
 

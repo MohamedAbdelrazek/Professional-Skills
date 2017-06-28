@@ -101,8 +101,8 @@ public class LoginActivity extends AppCompatActivity implements LoaderManager.Lo
 
 
             zUserSession.createLoginSession(zPassword, zEmail);
-            // Staring MainActivity
-            startActivity(new Intent(getApplicationContext(), MainActivity.class));
+            // Staring HomeActivity
+            startActivity(new Intent(getApplicationContext(), HomeActivity.class));
             progressDialog.dismiss();
             finish();
         } else {

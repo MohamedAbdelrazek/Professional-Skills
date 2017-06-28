@@ -152,7 +152,7 @@ public class SignUpActivity extends AppCompatActivity {
                 zUserSession.createLoginSession(zUser.getPassword(), zUser.getEmailAddress());
                 Toast.makeText(this, "Signed up successfully!", Toast.LENGTH_SHORT).show();
                 progressDialog.dismiss();
-                startActivity(new Intent(this, MainActivity.class));
+                startActivity(new Intent(this, HomeActivity.class));
                 finish();
             } else {
                 Toast.makeText(this, jsonObject.getString("error_message"), Toast.LENGTH_SHORT).show();
