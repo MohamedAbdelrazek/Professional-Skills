@@ -16,12 +16,8 @@ import okhttp3.Response;
 
 import static com.oneteam.graduationproject.Utils.Constant.LOGIN_URL;
 
-/**
- * Created by ehabhamdy on 2/17/17.
- */
 
 public class NetworkUtils {
-    final static String TAG = "NetworkUtils";
     final static String KEY_USERNAME = "username";
     final static String KEY_PASSWORD = "password";
 
@@ -34,14 +30,15 @@ public class NetworkUtils {
         URL url = null;
         try {
             url = new URL(builtUri.toString());
+
+            Log.i("ZOKA", "URL == " + url);
         } catch (MalformedURLException e) {
 
         }
-        Log.v(TAG, "Built URI " + url);
         return url;
     }
 
-    public static String getLoginResponse(URL url) throws IOException{
+    public static String getLoginResponse(URL url) throws IOException {
         OkHttpClient client = new OkHttpClient();
         Request request = new Request.Builder()
                 .url(url)

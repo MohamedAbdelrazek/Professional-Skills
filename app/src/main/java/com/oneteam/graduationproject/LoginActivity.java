@@ -45,7 +45,13 @@ public class LoginActivity extends AppCompatActivity implements LoaderManager.Lo
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_login);
         ButterKnife.bind(this);
-        zUserSession = new UserSession(getApplicationContext());
+        zUserSession = new UserSession(this);
+
+        // checking if the user already has email and password
+        //if there is no data this func will launch the login activity && if not it does nothing
+        zUserSession.checkLogin();
+
+
         _loginButton.setOnClickListener(new View.OnClickListener() {
 
             @Override
@@ -59,7 +65,7 @@ public class LoginActivity extends AppCompatActivity implements LoaderManager.Lo
             @Override
             public void onClick(View v) {
                 //Start the Signup activity
-                Intent intent = new Intent(getApplicationContext(), SignupActivity.class);
+                Intent intent = new Intent(getApplicationContext(), SignUpActivity.class);
                 startActivity(intent);
                 overridePendingTransition(R.anim.push_left_in, R.anim.push_left_out);
                 finish();
@@ -70,11 +76,12 @@ public class LoginActivity extends AppCompatActivity implements LoaderManager.Lo
     }
 
     public void login() {
+
+
         if (!validate()) {
             onLoginFailed();
             return;
         }
-        _loginButton.setEnabled(false);
 
         progressDialog = new ProgressDialog(LoginActivity.this,
                 R.style.AppTheme_Dark_Dialog);
@@ -82,17 +89,15 @@ public class LoginActivity extends AppCompatActivity implements LoaderManager.Lo
         progressDialog.setMessage("Authenticating...");
         progressDialog.show();
 
-        int loaderId = LOGIN_LOADER_ID;
 
-        LoaderManager.LoaderCallbacks<Boolean> callback = this;
-        getSupportLoaderManager().initLoader(loaderId, null, callback);
+        getSupportLoaderManager().initLoader(LOGIN_LOADER_ID, null, this);
 
     }
 
     private void checkIfAuthorized(Boolean status) {
 
         if (status) {
-            Toast.makeText(this, "Authoized !", Toast.LENGTH_SHORT).show();
+            Toast.makeText(this, "Authorized !", Toast.LENGTH_SHORT).show();
 
 
             zUserSession.createLoginSession(zPassword, zEmail);
@@ -101,9 +106,8 @@ public class LoginActivity extends AppCompatActivity implements LoaderManager.Lo
             progressDialog.dismiss();
             finish();
         } else {
-            Toast.makeText(this, "Un Authoized !", Toast.LENGTH_SHORT).show();
+            Toast.makeText(this, "Un Authorized !", Toast.LENGTH_SHORT).show();
             progressDialog.dismiss();
-            _loginButton.setEnabled(true);
         }
 
     }
@@ -113,28 +117,25 @@ public class LoginActivity extends AppCompatActivity implements LoaderManager.Lo
     public void onBackPressed() {
         moveTaskToBack(true);
     }
-
     public void onLoginFailed() {
-        Toast.makeText(getBaseContext(), "Login failed", Toast.LENGTH_LONG).show();
-
-        _loginButton.setEnabled(true);
+        Toast.makeText(getBaseContext(), "Login failed", Toast.LENGTH_SHORT).show();
     }
 
     public boolean validate() {
         boolean valid = true;
 
-         zEmail = _emailText.getText().toString();
+        zEmail = _emailText.getText().toString();
         zPassword = _passwordText.getText().toString();
-
+/*
 
         // I disabled checking for email format to be able to send usernames
 
-        /*if (zEmail.isEmpty() || !android.util.Patterns.EMAIL_ADDRESS.matcher(zEmail).matches()) {
+        if (zEmail.isEmpty() || !android.util.Patterns.EMAIL_ADDRESS.matcher(zEmail).matches()) {
             _emailText.setError("Enter a valid email address");
             valid = false;
         } else {
             _emailText.setError(null);
-        }*/
+        }
 
         if (zPassword.isEmpty() || zPassword.length() < 6) {
             _passwordText.setError("Password is too short !");
@@ -142,41 +143,33 @@ public class LoginActivity extends AppCompatActivity implements LoaderManager.Lo
         } else {
             _passwordText.setError(null);
         }
-
+ */
         return valid;
     }
+
 
     @Override
     public Loader<Boolean> onCreateLoader(int id, final Bundle args) {
         return new AsyncTaskLoader<Boolean>(this) {
-            boolean status;
 
             @Override
             protected void onStartLoading() {
-                if (args != null)
-                    deliverResult(status);
-                else
                     forceLoad();
             }
 
             @Override
             public Boolean loadInBackground() {
                 URL url = NetworkUtils.buildLoginUrl(zEmail, zPassword);
-                String jsonLoginRespose = null;
+                String jsonLoginResponse;
                 try {
-                    jsonLoginRespose = NetworkUtils.getLoginResponse(url);
-                    return NetworkUtils.getStatus(jsonLoginRespose);
+                    jsonLoginResponse = NetworkUtils.getLoginResponse(url);
+                    return NetworkUtils.getStatus(jsonLoginResponse);
                 } catch (IOException e) {
                     Log.e("Error:", "Error making login request");
                     return null;
                 }
             }
 
-            @Override
-            public void deliverResult(Boolean data) {
-                status = data;
-                super.deliverResult(data);
-            }
         };
     }
 
@@ -185,9 +178,7 @@ public class LoginActivity extends AppCompatActivity implements LoaderManager.Lo
         checkIfAuthorized(data);
 
     }
-
     @Override
     public void onLoaderReset(Loader<Boolean> loader) {
-
     }
 }

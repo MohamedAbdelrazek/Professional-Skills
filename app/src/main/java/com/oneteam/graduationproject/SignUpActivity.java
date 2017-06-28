@@ -4,7 +4,6 @@ import android.app.ProgressDialog;
 import android.content.Intent;
 import android.os.Bundle;
 import android.support.v7.app.AppCompatActivity;
-import android.util.Log;
 import android.view.View;
 import android.widget.Button;
 import android.widget.EditText;
@@ -25,8 +24,8 @@ import org.json.JSONObject;
 import java.util.HashMap;
 import java.util.Map;
 
-import butterknife.ButterKnife;
 import butterknife.Bind;
+import butterknife.ButterKnife;
 
 import static com.oneteam.graduationproject.Utils.Constant.KEY_ADDRESS;
 import static com.oneteam.graduationproject.Utils.Constant.KEY_F_NAME;
@@ -35,7 +34,7 @@ import static com.oneteam.graduationproject.Utils.Constant.KEY_PASSWORD;
 import static com.oneteam.graduationproject.Utils.Constant.KEY_PHONE;
 import static com.oneteam.graduationproject.Utils.Constant.REGISTER_URL;
 
-public class SignupActivity extends AppCompatActivity {
+public class SignUpActivity extends AppCompatActivity {
 
     @Bind(R.id.input_email)
     EditText zEmailAddress;
@@ -52,7 +51,7 @@ public class SignupActivity extends AppCompatActivity {
     @Bind(R.id.btn_signup)
     Button zCreatAccount;
     @Bind(R.id.link_login)
-     TextView zLoginLink;
+    TextView zLoginLink;
     private UserModel zUser;
     private ProgressDialog progressDialog;
 
@@ -82,14 +81,14 @@ public class SignupActivity extends AppCompatActivity {
     }
 
     public void signup() {
+
+
         if (!validate()) {
             onSignupFailed();
             return;
         }
 
-        zCreatAccount.setEnabled(false);
-
-        progressDialog = new ProgressDialog(SignupActivity.this,
+        progressDialog = new ProgressDialog(SignUpActivity.this,
                 R.style.AppTheme_Dark_Dialog);
         progressDialog.setIndeterminate(true);
         progressDialog.setMessage("Creating Account...");
@@ -115,7 +114,7 @@ public class SignupActivity extends AppCompatActivity {
 
                     @Override
                     public void onResponse(JSONObject response) {
-                        checkSignupState(response.toString());
+                        checkSignupState(response);
 
                     }
                 }, new Response.ErrorListener() {
@@ -123,8 +122,7 @@ public class SignupActivity extends AppCompatActivity {
 
             @Override
             public void onErrorResponse(VolleyError error) {
-                zCreatAccount.setEnabled(true);
-                Toast.makeText(SignupActivity.this, "an error occured !", Toast.LENGTH_SHORT).show();
+                Toast.makeText(SignUpActivity.this, "an error occurred!", Toast.LENGTH_SHORT).show();
 
             }
 
@@ -145,22 +143,21 @@ public class SignupActivity extends AppCompatActivity {
         Volley.newRequestQueue(this).add(jsonObjReq);
     }
 
-    private void checkSignupState(String JsonString) {
-        JSONObject _json = null;
-        try {
-            _json = new JSONObject(JsonString);
-        } catch (JSONException e) {
+    private void checkSignupState(JSONObject jsonObject) {
 
-        }
         try {
-            if (_json.getBoolean("statue")) {
-                Toast.makeText(this, "SignedUp!", Toast.LENGTH_SHORT).show();
+            if (jsonObject.getBoolean("statue")) {
+                UserSession zUserSession;
+                zUserSession = new UserSession(this);
+                zUserSession.createLoginSession(zUser.getPassword(), zUser.getEmailAddress());
+                Toast.makeText(this, "Signed up successfully!", Toast.LENGTH_SHORT).show();
                 progressDialog.dismiss();
+                startActivity(new Intent(this, MainActivity.class));
                 finish();
             } else {
-                Toast.makeText(this, _json.getString("error_message"), Toast.LENGTH_SHORT).show();
+                Toast.makeText(this, jsonObject.getString("error_message"), Toast.LENGTH_SHORT).show();
                 progressDialog.dismiss();
-                zCreatAccount.setEnabled(true);
+
             }
         } catch (JSONException e) {
             e.printStackTrace();
@@ -170,10 +167,11 @@ public class SignupActivity extends AppCompatActivity {
 
 
     public void onSignupFailed() {
-        Toast.makeText(getBaseContext(), "signUp failed", Toast.LENGTH_LONG).show();
+        Toast.makeText(getBaseContext(), "sign up failed", Toast.LENGTH_LONG).show();
 
-        zCreatAccount.setEnabled(true);
+
     }
+
 
     public boolean validate() {
         boolean valid = true;
@@ -186,6 +184,7 @@ public class SignupActivity extends AppCompatActivity {
         zUser.setMobileNumber(zMobileNumber.getText().toString());
         zUser.setPassword(zPassword.getText().toString());
 
+        /*
         if (zUser.getFirstName().isEmpty() || zUser.getFirstName().length() < 3) {
             zFirstName.setError("at least 3 characters");
             valid = false;
@@ -217,6 +216,10 @@ public class SignupActivity extends AppCompatActivity {
             zPassword.setError(null);
         }
 
+        return valid;
+    }
+
+*/
         return valid;
     }
 }
