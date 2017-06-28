@@ -18,6 +18,7 @@ import okhttp3.Request;
 import okhttp3.Response;
 
 import static com.oneteam.graduationproject.Utils.Constant.LOGIN_URL;
+import static com.oneteam.graduationproject.Utils.Constant.SPECIFIC_USER_URL;
 
 
 public class NetworkUtils {
@@ -40,6 +41,7 @@ public class NetworkUtils {
         }
         return url;
     }
+
     public static String getResponseFromHttpUrl(URL url) throws IOException {
         HttpURLConnection urlConnection = (HttpURLConnection) url.openConnection();
         try {
@@ -84,9 +86,41 @@ public class NetworkUtils {
         }
         return null;
     }
-    public static URL getUserUrl(String link) {
 
-        Uri builtUri = Uri.parse(link).buildUpon().build();
+    public static URL getAllUsersUsersUrl() {
+
+        Uri builtUri = Uri.parse(Constant.ALL_USERS_URL).buildUpon().build();
+        URL url = null;
+        try {
+            url = new URL(builtUri.toString());
+        } catch (MalformedURLException e) {
+            e.printStackTrace();
+        }
+
+
+        return url;
+    }
+
+    public static URL getUserUrl(String username) {
+
+        String ss = "" + SPECIFIC_USER_URL + "/" + username;
+        Uri builtUri = Uri.parse(ss).buildUpon().build();
+        URL url = null;
+        try {
+            url = new URL(builtUri.toString());
+        } catch (MalformedURLException e) {
+            e.printStackTrace();
+        }
+
+
+        return url;
+
+    }
+
+
+    public static URL getAllUserPosts() {
+        String ss = "" + Constant.ALL_POSTS;
+        Uri builtUri = Uri.parse(ss).buildUpon().build();
         URL url = null;
         try {
             url = new URL(builtUri.toString());

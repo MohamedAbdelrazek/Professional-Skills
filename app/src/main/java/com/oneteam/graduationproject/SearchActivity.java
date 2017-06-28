@@ -1,5 +1,6 @@
 package com.oneteam.graduationproject;
 
+import android.content.Intent;
 import android.os.Bundle;
 import android.support.v4.app.LoaderManager;
 import android.support.v4.content.AsyncTaskLoader;
@@ -14,6 +15,8 @@ import android.view.Menu;
 import android.view.MenuItem;
 
 import com.oneteam.graduationproject.Utils.NetworkUtils;
+import com.oneteam.graduationproject.adapters.SearchAdapter;
+import com.oneteam.graduationproject.models.UserModel;
 
 import org.json.JSONArray;
 import org.json.JSONException;
@@ -25,9 +28,9 @@ import java.util.ArrayList;
 
 public class SearchActivity extends AppCompatActivity implements LoaderManager.LoaderCallbacks<ArrayList<UserModel>> {
 
-    public static final String BASE_URL = "https://professionalskillsapiii.eu-gb.mybluemix.net/restapi/user";
+
     private RecyclerView mRecyclerView;
-    private ArrayList<UserModel> mArrayList;
+
     private SearchAdapter mAdapter;
 
     @Override
@@ -49,6 +52,8 @@ public class SearchActivity extends AppCompatActivity implements LoaderManager.L
         mRecyclerView.setHasFixedSize(true);
         RecyclerView.LayoutManager layoutManager = new LinearLayoutManager(this);
         mRecyclerView.setLayoutManager(layoutManager);
+
+
     }
 
     @Override
@@ -67,7 +72,7 @@ public class SearchActivity extends AppCompatActivity implements LoaderManager.L
 
             @Override
             public ArrayList<UserModel> loadInBackground() {
-                URL usersRequstUrl = NetworkUtils.getUserUrl(BASE_URL);
+                URL usersRequstUrl = NetworkUtils.getAllUsersUsersUrl();
 
                 try {
                     String JsonUsersResponse = NetworkUtils.getResponseFromHttpUrl(usersRequstUrl);
@@ -82,6 +87,7 @@ public class SearchActivity extends AppCompatActivity implements LoaderManager.L
                         userModel.setLastName(c.getString("lastName"));
                         userModel.setMobileNumber(c.getString("phone"));
                         userModel.setEmailAddress(c.getString("userName"));
+                        userModel.setId(c.getString("userId"));
 
                         userModelArrayList.add(userModel);
                     }
@@ -103,7 +109,15 @@ public class SearchActivity extends AppCompatActivity implements LoaderManager.L
 
     @Override
     public void onLoadFinished(Loader<ArrayList<UserModel>> loader, ArrayList<UserModel> data) {
-        mAdapter = new SearchAdapter(data);
+        mAdapter = new SearchAdapter(data, new SearchAdapter.onRecyclerClickListener() {
+            @Override
+            public void onClick(String username) {
+
+                Intent intent = new Intent(getApplicationContext(), ProfileActivity.class);
+                intent.putExtra("username", username);
+                startActivity(intent);
+            }
+        });
         mRecyclerView.setAdapter(mAdapter);
     }
 
@@ -146,4 +160,6 @@ public class SearchActivity extends AppCompatActivity implements LoaderManager.L
     public boolean onOptionsItemSelected(MenuItem item) {
         return super.onOptionsItemSelected(item);
     }
+
+
 }

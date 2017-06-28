@@ -1,0 +1,64 @@
+<?xml version="1.0" encoding="utf-8"?>
+<LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    android:layout_width="match_parent"
+    android:layout_height="wrap_content"
+    android:layout_margin="10dp"
+    android:orientation="vertical">
+
+
+    <LinearLayout
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:orientation="horizontal">
+
+        <ImageView
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:src="@drawable/boy" />
+
+        <LinearLayout
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:layout_gravity="center"
+            android:orientation="vertical">
+
+
+            <TextView
+                android:id="@+id/user_name"
+                android:textColor="@color/black"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:text="Mohamed Abdelrazek"
+                android:textSize="30sp"
+                android:layout_marginLeft="10dp"
+                android:textStyle="bold" />
+
+        </LinearLayout>
+    </LinearLayout>
+    <LinearLayout
+        android:layout_width="match_parent"
+        android:layout_marginLeft="10dp"
+        android:layout_height="wrap_content"
+        android:orientation="vertical">
+        <TextView
+            android:id="@+id/title"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:textSize="20sp"
+            android:textColor="@color/black"
+            android:text="Just a Java Question:"
+            android:textStyle="bold" />
+
+        <TextView
+            android:id="@+id/content"
+            android:layout_width="match_parent"
+            android:typeface="sans"
+            android:textSize="15sp"
+            android:textColor="@color/black"
+            android:layout_height="wrap_content"
+
+            android:text="schools like Stanford and Yale - no application required. Build career skills in data" />
+
+    </LinearLayout>
+
+</LinearLayout>

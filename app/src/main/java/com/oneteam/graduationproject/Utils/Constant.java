@@ -13,4 +13,7 @@ public class Constant {
     public static final String KEY_L_NAME = "lastName";
     public static final String KEY_PHONE = "phone";
     public static final String KEY_ADDRESS = "address";
+    public static final String ALL_USERS_URL = "https://professionalskillsapiii.eu-gb.mybluemix.net/restapi/user";
+    public static String SPECIFIC_USER_URL = "https://professionalskillsapiii.eu-gb.mybluemix.net/restapi/user/username";
+    public static String ALL_POSTS = "https://professionalskillsapiii.eu-gb.mybluemix.net/restapi/question";
 }

@@ -32,17 +32,17 @@
             android:theme="@style/AppTheme.Dark" />
         <activity
             android:name=".ProfileActivity"
-            android:label="Profile" />
+            android:label="Profile"
+            android:theme="@style/AppTheme.NoActionBar" />
         <activity
             android:name=".SearchActivity"
             android:label="Type a username to search for"
             android:theme="@style/AppTheme.NoActionBar">
-
             <meta-data
                 android:name="android.support.PARENT_ACTIVITY"
                 android:value=".HomeActivity" />
-
         </activity>
+        <activity android:name=".CommentActivity"></activity>
     </application>
 
 </manifest>

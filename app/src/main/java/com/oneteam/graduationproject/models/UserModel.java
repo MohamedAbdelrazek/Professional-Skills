@@ -1,4 +1,4 @@
-package com.oneteam.graduationproject;
+package com.oneteam.graduationproject.models;
 
 /**
  * Created by Mohamed AbdelraZek on 2/11/2017.
@@ -11,6 +11,15 @@ public class UserModel {
     private String MobileNumber;
     private String Password;
     private String Address;
+    private String Id;
+
+    public String getId() {
+        return Id;
+    }
+
+    public void setId(String id) {
+        Id = id;
+    }
 
     public String getFirstName() {
         return FirstName;

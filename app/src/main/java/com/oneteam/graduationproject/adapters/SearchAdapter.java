@@ -1,4 +1,4 @@
-package com.oneteam.graduationproject;
+package com.oneteam.graduationproject.adapters;
 
 import android.support.v7.widget.RecyclerView;
 import android.view.LayoutInflater;
@@ -8,25 +8,32 @@ import android.widget.Filter;
 import android.widget.Filterable;
 import android.widget.TextView;
 
+import com.oneteam.graduationproject.R;
+import com.oneteam.graduationproject.models.UserModel;
+
 import java.util.ArrayList;
 
 /**
  * Created by Karim Gamal -PC on 6/25/2017.
  */
 
-public class SearchAdapter extends RecyclerView.Adapter<SearchAdapter.ViewHolder> implements Filterable {
 
+public class SearchAdapter extends RecyclerView.Adapter<SearchAdapter.ViewHolder> implements Filterable {
+    private onRecyclerClickListener mOnRecyclerClickListener;
     private ArrayList<UserModel> mArrayList;
     private ArrayList<UserModel> mFilteredList;
 
-    public SearchAdapter(ArrayList<UserModel> arrayList) {
+    public SearchAdapter(ArrayList<UserModel> arrayList, onRecyclerClickListener onRecyclerClickListener) {
         mArrayList = arrayList;
         mFilteredList = arrayList;
+
+        mOnRecyclerClickListener = onRecyclerClickListener;
     }
 
+
     @Override
-    public SearchAdapter.ViewHolder onCreateViewHolder(ViewGroup viewGroup, int i) {
-        View view = LayoutInflater.from(viewGroup.getContext()).inflate(R.layout.user_row, viewGroup, false);
+    public ViewHolder onCreateViewHolder(ViewGroup parent, int viewType) {
+        View view = LayoutInflater.from(parent.getContext()).inflate(R.layout.user_row_for_research_recycler, parent, false);
         return new ViewHolder(view);
     }
 
@@ -92,6 +99,18 @@ public class SearchAdapter extends RecyclerView.Adapter<SearchAdapter.ViewHolder
             super(view);
             tv_email = (TextView) view.findViewById(R.id.tv_email);
             tv_phone = (TextView) view.findViewById(R.id.tv_phone);
+
+            view.setOnClickListener(new View.OnClickListener() {
+                @Override
+                public void onClick(View v) {
+
+                    mOnRecyclerClickListener.onClick(mFilteredList.get(getAdapterPosition()).getEmailAddress());
+                }
+            });
         }
+    }
+
+   public interface onRecyclerClickListener {
+        void onClick(String username);
     }
 }
