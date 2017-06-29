@@ -22,32 +22,96 @@
             android:layout_marginTop="-60dp"
             android:elevation="5dp"
             android:padding="20dp"
-            android:src="@drawable/zoka"
+            android:src="@drawable/user"
             app:civ_border_color="#FF000000"
             app:civ_border_width="2dp" />
 
-        <RelativeLayout
+        <LinearLayout
             android:id="@+id/profile_layout"
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
             android:layout_below="@+id/header_cover_image"
             android:background="#c08a0000"
             android:elevation="4dp"
+            android:orientation="vertical"
             android:paddingBottom="24dp">
 
 
             <TextView
                 android:id="@+id/user_profile_name"
-                android:layout_width="wrap_content"
+                android:layout_width="match_parent"
                 android:layout_height="wrap_content"
                 android:layout_centerHorizontal="true"
                 android:layout_marginTop="50dp"
-                android:text="Mohamed Abdelrazek"
+                android:gravity="center"
                 android:textColor="#fff"
                 android:textSize="24sp"
                 android:textStyle="bold" />
 
-        </RelativeLayout>
+            <View
+                android:layout_width="200dp"
+                android:layout_height="3dp"
+                android:layout_gravity="center"
+                android:layout_margin="10dp"
+                android:background="@android:color/white" />
+
+            <LinearLayout
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:orientation="vertical">
+
+                <LinearLayout
+                    android:layout_width="match_parent"
+                    android:layout_height="wrap_content"
+                    android:layout_margin="10dp"
+                    android:gravity="center">
+
+                    <TextView
+                        android:layout_width="wrap_content"
+                        android:layout_height="wrap_content"
+                        android:text="Mobile Number: "
+                        android:textColor="#fff"
+                        android:textSize="20sp"
+                        android:textStyle="bold" />
+
+                    <TextView
+                        android:id="@+id/mobile_number"
+                        android:layout_width="wrap_content"
+                        android:layout_height="wrap_content"
+                        android:layout_centerHorizontal="true"
+                        android:textColor="#fff"
+                        android:textSize="20sp"
+                        android:textStyle="bold" />
+                </LinearLayout>
+
+                <LinearLayout
+                    android:layout_width="match_parent"
+                    android:layout_height="wrap_content"
+                    android:layout_margin="10dp"
+                    android:gravity="center">
+
+                    <TextView
+                        android:layout_width="wrap_content"
+                        android:layout_height="wrap_content"
+                        android:text="Email:"
+                        android:textColor="#fff"
+                        android:textSize="20sp"
+                        android:textStyle="bold" />
+
+                    <TextView
+                        android:id="@+id/email"
+                        android:layout_width="wrap_content"
+                        android:layout_height="wrap_content"
+                        android:layout_centerHorizontal="true"
+                        android:layout_marginLeft="10dp"
+                        android:textColor="#fff"
+                        android:textSize="20sp"
+                        android:textStyle="bold" />
+                </LinearLayout>
+
+            </LinearLayout>
+
+        </LinearLayout>
 
 
         <LinearLayout
@@ -61,20 +125,29 @@
             <EditText
                 android:id="@+id/post_edit_txt"
                 android:layout_width="match_parent"
-                android:hint="What's on your mind !"
-                android:layout_height="100dp" />
+                android:layout_height="100dp"
+                android:hint="What's on your mind !" />
 
             <Button
+                android:id="@+id/post_btn"
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
+                android:layout_gravity="center"
+
                 android:layout_margin="5dp"
                 android:elevation="4dp"
-
                 android:padding="20dp"
-                android:layout_gravity="center"
-                android:id="@+id/post_btn"
                 android:text="POST" />
 
+            <android.support.v7.widget.RecyclerView
+                android:id="@+id/user_recycler_view"
+                android:layout_width="match_parent"
+
+                android:layout_height="match_parent">
+
+            </android.support.v7.widget.RecyclerView>
+
         </LinearLayout>
+
     </RelativeLayout>
 </ScrollView>

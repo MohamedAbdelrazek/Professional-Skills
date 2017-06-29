@@ -72,7 +72,7 @@ public class SearchActivity extends AppCompatActivity implements LoaderManager.L
 
             @Override
             public ArrayList<UserModel> loadInBackground() {
-                URL usersRequstUrl = NetworkUtils.getAllUsersUsersUrl();
+                URL usersRequstUrl = NetworkUtils.getAllUsersUrl();
 
                 try {
                     String JsonUsersResponse = NetworkUtils.getResponseFromHttpUrl(usersRequstUrl);

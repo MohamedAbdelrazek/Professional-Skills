@@ -87,7 +87,7 @@ public class NetworkUtils {
         return null;
     }
 
-    public static URL getAllUsersUsersUrl() {
+    public static URL getAllUsersUrl() {
 
         Uri builtUri = Uri.parse(Constant.ALL_USERS_URL).buildUpon().build();
         URL url = null;
@@ -131,4 +131,37 @@ public class NetworkUtils {
 
         return url;
     }
+
+    public static URL getSingleUserPosts(String id) {
+        String ss = "" + Constant.USER_POSTS + "/" + id;
+        Uri builtUri = Uri.parse(ss).buildUpon().build();
+        URL url = null;
+        try {
+            url = new URL(builtUri.toString());
+        } catch (MalformedURLException e) {
+            e.printStackTrace();
+        }
+
+
+        return url;
+    }
+
+    public static URL getComments(int mQId) {
+
+
+        String ss = "" + Constant.USER_COMMENTS + "/" + mQId;
+        Uri builtUri = Uri.parse(ss).buildUpon().build();
+        URL url = null;
+        try {
+            url = new URL(builtUri.toString());
+        } catch (MalformedURLException e) {
+            e.printStackTrace();
+        }
+
+
+        return url;
+
+    }
+
+
 }

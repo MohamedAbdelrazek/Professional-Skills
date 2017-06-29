@@ -15,11 +15,11 @@ import java.util.ArrayList;
  * Created by Mohamed AbdelraZek on 6/28/2017.
  */
 
-public class HomePostAdapter extends RecyclerView.Adapter<HomePostAdapter.ViewHolder> {
+public class PostsAdapter extends RecyclerView.Adapter<PostsAdapter.ViewHolder> {
     private ArrayList<QuestionModel> mData;
     private onRecyclerClickListener mOnRecyclerClickListener;
 
-    public HomePostAdapter(ArrayList<QuestionModel> data, onRecyclerClickListener onRecyclerClickListener) {
+    public PostsAdapter(ArrayList<QuestionModel> data, onRecyclerClickListener onRecyclerClickListener) {
         mOnRecyclerClickListener = onRecyclerClickListener;
         mData = data;
     }
@@ -41,7 +41,10 @@ public class HomePostAdapter extends RecyclerView.Adapter<HomePostAdapter.ViewHo
 
     @Override
     public int getItemCount() {
-        return mData.size();
+        if (mData.size() > 0) {
+            return mData.size();
+        }
+        return 0;
     }
 
     public class ViewHolder extends RecyclerView.ViewHolder {

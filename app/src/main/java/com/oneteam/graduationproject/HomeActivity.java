@@ -20,7 +20,7 @@ import android.widget.TextView;
 import android.widget.Toast;
 
 import com.oneteam.graduationproject.Utils.NetworkUtils;
-import com.oneteam.graduationproject.adapters.HomePostAdapter;
+import com.oneteam.graduationproject.adapters.PostsAdapter;
 import com.oneteam.graduationproject.models.QuestionModel;
 
 import java.io.IOException;
@@ -32,7 +32,7 @@ public class HomeActivity extends AppCompatActivity implements LoaderManager.Loa
     private DrawerLayout drawerLayout;
     private Toolbar toolbar;
     private RecyclerView mRecyclerView;
-    private HomePostAdapter mAdapter;
+    private PostsAdapter mAdapter;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -158,10 +158,12 @@ public class HomeActivity extends AppCompatActivity implements LoaderManager.Loa
 
     @Override
     public void onLoadFinished(Loader<ArrayList<QuestionModel>> loader, ArrayList<QuestionModel> data) {
-        mAdapter = new HomePostAdapter(data, new HomePostAdapter.onRecyclerClickListener() {
+        mAdapter = new PostsAdapter(data, new PostsAdapter.onRecyclerClickListener() {
             @Override
             public void onClick(QuestionModel questionModel) {
-                Toast.makeText(HomeActivity.this, "ID = "+questionModel.getAuthorName(), Toast.LENGTH_SHORT).show();
+                Intent intent = new Intent(getApplicationContext(), CommentActivity.class);
+                intent.putExtra(Intent.EXTRA_TEXT, questionModel);
+                startActivity(intent);
             }
         });
         mRecyclerView.setAdapter(mAdapter);
