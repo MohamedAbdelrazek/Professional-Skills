@@ -14,7 +14,6 @@ import android.view.View;
 import android.widget.Button;
 import android.widget.EditText;
 import android.widget.TextView;
-import android.widget.Toast;
 
 import com.oneteam.graduationproject.Utils.NetworkUtils;
 import com.oneteam.graduationproject.adapters.CommentAdapter;
@@ -119,7 +118,6 @@ public class CommentActivity extends AppCompatActivity implements LoaderManager.
 
     @Override
     public void onLoadFinished(Loader<ArrayList<CommentModel>> loader, ArrayList<CommentModel> data) {
-        Toast.makeText(this, "" + mQId, Toast.LENGTH_SHORT).show();
         mAdapter = new CommentAdapter(data, new CommentAdapter.onRecyclerClickListener() {
             @Override
             public void onClick(CommentModel commentModel) {

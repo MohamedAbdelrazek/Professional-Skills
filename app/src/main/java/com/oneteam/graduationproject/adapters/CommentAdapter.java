@@ -54,7 +54,8 @@ public class CommentAdapter extends RecyclerView.Adapter<CommentAdapter.ViewHold
             username = (TextView) view.findViewById(R.id.user_name);
             content = (TextView) view.findViewById(R.id.content);
 
-            view.setOnClickListener(new View.OnClickListener() {
+
+            username.setOnClickListener(new View.OnClickListener() {
                 @Override
                 public void onClick(View v) {
                     mOnRecyclerClickListener.onClick(mData.get(getAdapterPosition()));
@@ -65,6 +66,6 @@ public class CommentAdapter extends RecyclerView.Adapter<CommentAdapter.ViewHold
     }
 
     public interface onRecyclerClickListener {
-        void onClick(CommentModel questionModel);
+        void onClick(CommentModel commentModel);
     }
 }

@@ -100,7 +100,7 @@ public class LoginActivity extends AppCompatActivity implements LoaderManager.Lo
             Toast.makeText(this, "Authorized !", Toast.LENGTH_SHORT).show();
 
 
-            zUserSession.createLoginSession(zPassword, zEmail);
+            zUserSession.createLoginSession(zEmail, zPassword, "","");
             // Staring HomeActivity
             startActivity(new Intent(getApplicationContext(), HomeActivity.class));
             progressDialog.dismiss();
@@ -117,6 +117,7 @@ public class LoginActivity extends AppCompatActivity implements LoaderManager.Lo
     public void onBackPressed() {
         moveTaskToBack(true);
     }
+
     public void onLoginFailed() {
         Toast.makeText(getBaseContext(), "Login failed", Toast.LENGTH_SHORT).show();
     }
@@ -154,7 +155,7 @@ public class LoginActivity extends AppCompatActivity implements LoaderManager.Lo
 
             @Override
             protected void onStartLoading() {
-                    forceLoad();
+                forceLoad();
             }
 
             @Override
@@ -178,6 +179,7 @@ public class LoginActivity extends AppCompatActivity implements LoaderManager.Lo
         checkIfAuthorized(data);
 
     }
+
     @Override
     public void onLoaderReset(Loader<Boolean> loader) {
     }

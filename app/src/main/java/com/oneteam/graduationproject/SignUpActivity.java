@@ -150,7 +150,8 @@ public class SignUpActivity extends AppCompatActivity {
             if (jsonObject.getBoolean("statue")) {
                 UserSession zUserSession;
                 zUserSession = new UserSession(this);
-                zUserSession.createLoginSession(zUser.getPassword(), zUser.getEmailAddress());
+                zUserSession.createLoginSession(zUser.getPassword(),
+                        zUser.getEmailAddress(), "", "");
                 Toast.makeText(this, "Signed up successfully!", Toast.LENGTH_SHORT).show();
                 progressDialog.dismiss();
                 startActivity(new Intent(this, HomeActivity.class));

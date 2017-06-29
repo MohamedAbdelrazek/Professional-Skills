@@ -11,6 +11,7 @@ import java.util.HashMap;
  */
 
 public class UserSession {
+
     SharedPreferences zPref;
     SharedPreferences.Editor zEditor;
     Context zContext;
@@ -18,7 +19,9 @@ public class UserSession {
     private static final String PREF_NAME = "AndroidGProject";
     private static final String IS_LOGIN = "IsLoggedIn";
     public static final String KEY_NAME = "name";
+    public static final String KEY_PASSWORD = "password";
     public static final String KEY_EMAIL = "email";
+    public static final String KEY_ID = "id";
 
     public UserSession(Context context) {
         this.zContext = context;
@@ -26,12 +29,12 @@ public class UserSession {
         zEditor = zPref.edit();
     }
 
-    public void createLoginSession(String name, String email) {
+    public void createLoginSession(String email, String password, String name, String id) {
         zEditor.putBoolean(IS_LOGIN, true);
-
-        zEditor.putString(KEY_NAME, name);
-
         zEditor.putString(KEY_EMAIL, email);
+        zEditor.putString(KEY_PASSWORD, password);
+        zEditor.putString(KEY_NAME, name);
+        zEditor.putString(KEY_ID, id);
         zEditor.commit();
     }
 
@@ -56,11 +59,10 @@ public class UserSession {
      */
     public HashMap<String, String> getUserDetails() {
         HashMap<String, String> user = new HashMap<String, String>();
-        // user name
-        user.put(KEY_NAME, zPref.getString(KEY_NAME, null));
-
-        // user email id
+        user.put(KEY_PASSWORD, zPref.getString(KEY_PASSWORD, null));
         user.put(KEY_EMAIL, zPref.getString(KEY_EMAIL, null));
+        user.put(KEY_NAME, zPref.getString(KEY_NAME, null));
+        user.put(KEY_ID, zPref.getString(KEY_ID, null));
 
         // return user
         return user;

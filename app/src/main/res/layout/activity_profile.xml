@@ -121,19 +121,31 @@
             android:layout_marginTop="5dp"
             android:orientation="vertical">
 
+            <EditText
+                android:id="@+id/post_title_edit_txt"
+                android:layout_width="match_parent"
+                android:layout_height="50dp"
+                android:layout_margin="10dp"
+                android:background="@drawable/edit_text_border"
+                android:gravity="center"
+                android:hint="Enter Question Title here !"
+                android:textSize="20sp" />
 
             <EditText
-                android:id="@+id/post_edit_txt"
+                android:id="@+id/post_content_edit_txt"
                 android:layout_width="match_parent"
                 android:layout_height="100dp"
-                android:hint="What's on your mind !" />
+                android:layout_margin="10dp"
+                android:background="@drawable/edit_text_border"
+                android:gravity="center"
+                android:hint="Enter Question content here !"
+                android:textSize="20sp" />
 
             <Button
                 android:id="@+id/post_btn"
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
                 android:layout_gravity="center"
-
                 android:layout_margin="5dp"
                 android:elevation="4dp"
                 android:padding="20dp"

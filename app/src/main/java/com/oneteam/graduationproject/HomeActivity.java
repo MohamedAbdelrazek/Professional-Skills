@@ -14,6 +14,7 @@ import android.support.v7.widget.DividerItemDecoration;
 import android.support.v7.widget.LinearLayoutManager;
 import android.support.v7.widget.RecyclerView;
 import android.support.v7.widget.Toolbar;
+import android.util.Log;
 import android.view.MenuItem;
 import android.view.View;
 import android.widget.TextView;
@@ -22,6 +23,7 @@ import android.widget.Toast;
 import com.oneteam.graduationproject.Utils.NetworkUtils;
 import com.oneteam.graduationproject.adapters.PostsAdapter;
 import com.oneteam.graduationproject.models.QuestionModel;
+import com.oneteam.graduationproject.models.UserModel;
 
 import java.io.IOException;
 import java.net.URL;
@@ -44,6 +46,7 @@ public class HomeActivity extends AppCompatActivity implements LoaderManager.Loa
         initNavigationDrawer();
         initViews();
         getSupportLoaderManager().initLoader(33, null, this);
+        getSupportLoaderManager().initLoader(34, null, userInfoLoader);
 
     }
 
@@ -174,5 +177,62 @@ public class HomeActivity extends AppCompatActivity implements LoaderManager.Loa
     public void onLoaderReset(Loader<ArrayList<QuestionModel>> loader) {
 
     }
+
+
+    private LoaderManager.LoaderCallbacks<UserModel> userInfoLoader = new LoaderManager.LoaderCallbacks<UserModel>() {
+        @Override
+        public Loader<UserModel> onCreateLoader(int id, final Bundle args) {
+            return new AsyncTaskLoader<UserModel>(getBaseContext()) {
+                UserModel userModel = new UserModel();
+
+                @Override
+                protected void onStartLoading() {
+                    if (args != null)
+                        deliverResult(userModel);
+                    else
+                        forceLoad();
+                }
+
+                @Override
+                public UserModel loadInBackground() {
+
+                    URL userRequestUrl = NetworkUtils.getUserUrl(zUserSession.getUserDetails().get(UserSession.KEY_EMAIL));
+
+
+                    String JsonUserResponse = null;
+                    try {
+                        JsonUserResponse = NetworkUtils.getResponseFromHttpUrl(userRequestUrl);
+                    } catch (IOException e) {
+                        e.printStackTrace();
+                    }
+
+                    userModel = Parser.getUserInfo(JsonUserResponse);
+                    return userModel;
+                }
+
+                @Override
+                public void deliverResult(UserModel data) {
+                    super.deliverResult(data);
+                }
+            };
+        }
+
+
+        @Override
+        public void onLoadFinished(Loader<UserModel> loader, UserModel data) {
+            Log.i("ZOKA", "HOME ACTIVITY Session=> " + data.getId());
+
+            zUserSession.createLoginSession(data.getEmailAddress(), data.getPassword(), data.getFirstName() + " " + data.getLastName(), data.getId());
+
+
+        }
+
+        @Override
+        public void onLoaderReset(Loader<UserModel> loader) {
+
+        }
+
+
+    };
 
 }
