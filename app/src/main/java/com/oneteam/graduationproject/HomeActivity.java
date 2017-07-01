@@ -14,7 +14,6 @@ import android.support.v7.widget.DividerItemDecoration;
 import android.support.v7.widget.LinearLayoutManager;
 import android.support.v7.widget.RecyclerView;
 import android.support.v7.widget.Toolbar;
-import android.util.Log;
 import android.view.MenuItem;
 import android.view.View;
 import android.widget.TextView;
@@ -28,6 +27,7 @@ import com.oneteam.graduationproject.models.UserModel;
 import java.io.IOException;
 import java.net.URL;
 import java.util.ArrayList;
+import java.util.Collections;
 
 public class HomeActivity extends AppCompatActivity implements LoaderManager.LoaderCallbacks<ArrayList<QuestionModel>> {
     private UserSession zUserSession;
@@ -161,6 +161,8 @@ public class HomeActivity extends AppCompatActivity implements LoaderManager.Loa
 
     @Override
     public void onLoadFinished(Loader<ArrayList<QuestionModel>> loader, ArrayList<QuestionModel> data) {
+
+        Collections.reverse(data);
         mAdapter = new PostsAdapter(data, new PostsAdapter.onRecyclerClickListener() {
             @Override
             public void onClick(QuestionModel questionModel) {
@@ -220,9 +222,9 @@ public class HomeActivity extends AppCompatActivity implements LoaderManager.Loa
 
         @Override
         public void onLoadFinished(Loader<UserModel> loader, UserModel data) {
-            Log.i("ZOKA", "HOME ACTIVITY Session=> " + data.getId());
 
-            zUserSession.createLoginSession(data.getEmailAddress(), data.getPassword(), data.getFirstName() + " " + data.getLastName(), data.getId());
+            zUserSession.createLoginSession(data.getEmailAddress(),
+                    data.getPassword(), data.getFirstName() + " " + data.getLastName(), data.getId());
 
 
         }
