@@ -11,7 +11,7 @@
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
         android:gravity="center"
-        android:text="Do you want to track this driver?"
+        android:text="Do you want to remove this Skill?"
         android:textSize="20sp" />
 
     <LinearLayout

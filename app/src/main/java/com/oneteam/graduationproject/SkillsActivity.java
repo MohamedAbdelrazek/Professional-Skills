@@ -173,6 +173,7 @@ public class SkillsActivity extends AppCompatActivity {
 
                 @Override
                 public void onLoadFinished(Loader<ArrayList<SkillModel>> loader, final ArrayList<SkillModel> data) {
+
                     Collections.reverse(data);
                     mAdapter = new SkillsAdapter(data, new SkillsAdapter.onRecyclerLongClickListener() {
                         @Override
