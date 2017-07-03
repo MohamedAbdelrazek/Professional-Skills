@@ -25,7 +25,7 @@
 
             <TextView
                 android:id="@+id/user_name"
-                android:textColor="@color/black"
+                android:textColor="@color/user_name"
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
                 android:text="Mohamed Abdelrazek"
@@ -37,15 +37,17 @@
     </LinearLayout>
     <LinearLayout
         android:layout_width="match_parent"
-        android:layout_marginLeft="10dp"
+        android:layout_marginLeft="50dp"
+        android:layout_marginRight="50dp"
         android:layout_height="wrap_content"
+
         android:orientation="vertical">
         <TextView
             android:id="@+id/title"
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
             android:textSize="20sp"
-            android:textColor="@color/black"
+            android:textColor="@color/title"
             android:text="Just a Java Question:"
             android:textStyle="bold" />
 
@@ -54,7 +56,8 @@
             android:layout_width="match_parent"
             android:typeface="sans"
             android:textSize="15sp"
-            android:textColor="@color/black"
+            android:layout_marginTop="5dp"
+            android:textColor="@color/content"
             android:layout_height="wrap_content"
 
             android:text="schools like Stanford and Yale - no application required. Build career skills in data" />

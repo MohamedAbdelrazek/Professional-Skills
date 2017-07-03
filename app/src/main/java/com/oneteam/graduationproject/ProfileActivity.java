@@ -16,6 +16,7 @@ import android.view.View;
 import android.widget.Button;
 import android.widget.EditText;
 import android.widget.TextView;
+import android.widget.Toast;
 
 import com.android.volley.AuthFailureError;
 import com.android.volley.Request;
@@ -88,13 +89,17 @@ public class ProfileActivity extends AppCompatActivity {
                 questionModel.setTitle(postTitleEditTxt.getText().toString());
                 questionModel.setAuthorName(new UserSession(getApplicationContext()).getUserDetails().get(UserSession.KEY_NAME));
                 questionModel.setUserId(Integer.parseInt(new UserSession(getApplicationContext()).getUserDetails().get(UserSession.KEY_ID)));
-                addQuestion(questionModel);
 
-                postContentEditTxt.clearFocus();
-                postContentEditTxt.setText("");
-                postTitleEditTxt.clearFocus();
-                postTitleEditTxt.setText("");
+                if (postTitleEditTxt.getText().toString().length() < 10 && postContentEditTxt.length() < 10) {
+                    Toast.makeText(ProfileActivity.this, "too short !", Toast.LENGTH_SHORT).show();
 
+                } else {
+                    addQuestion(questionModel);
+                    postContentEditTxt.clearFocus();
+                    postContentEditTxt.setText("");
+                    postTitleEditTxt.clearFocus();
+                    postTitleEditTxt.setText("");
+                }
 
                 getSupportLoaderManager().restartLoader(LOADER_ID, null, userQuestionLoader);
 
@@ -161,6 +166,7 @@ public class ProfileActivity extends AppCompatActivity {
         };
         // Adding request to request queue
         Volley.newRequestQueue(this).add(jsonObjReq);
+        getSupportLoaderManager().restartLoader(LOADER_ID, null, userQuestionLoader);
     }
 
 

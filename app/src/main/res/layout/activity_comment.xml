@@ -33,8 +33,9 @@
                     android:layout_height="wrap_content"
                     android:layout_marginLeft="10dp"
                     android:text="Mohamed Abdelrazek"
-                    android:textColor="@color/black"
+                    android:textColor="@color/user_name"
                     android:textSize="30sp"
+
                     android:textStyle="bold" />
 
             </LinearLayout>
@@ -51,7 +52,7 @@
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content"
                 android:text="Just a Java Question:"
-                android:textColor="@color/black"
+                android:textColor="@color/title"
                 android:textSize="20sp"
                 android:textStyle="bold" />
 
@@ -60,7 +61,7 @@
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content"
                 android:text="schools like Stanford and Yale - no application required. Build career skills in data"
-                android:textColor="@color/black"
+                android:textColor="@color/content"
                 android:textSize="15sp"
 
                 android:typeface="sans" />
@@ -73,6 +74,7 @@
             android:layout_margin="10dp"
             android:gravity="center"
             android:text="Comments"
+            android:textColor="@color/content"
             android:textSize="30sp" />
 
         <LinearLayout
@@ -87,6 +89,7 @@
                 android:background="@drawable/edit_text_border"
                 android:hint=" add comment"
                 android:textAlignment="center"
+                android:textColor="@color/content"
                 android:textSize="25sp" />
 
             <Button
@@ -95,6 +98,7 @@
                 android:layout_gravity="center"
                 android:id="@+id/comment_button"
                 android:text="comment"
+                android:textColor="@color/user_name"
                 android:textSize="20sp" />
 
         </LinearLayout>

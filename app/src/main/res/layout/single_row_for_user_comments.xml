@@ -9,6 +9,7 @@
     <LinearLayout
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
+        android:layout_margin="5dp"
         android:orientation="horizontal">
 
         <ImageView
@@ -29,7 +30,7 @@
                 android:layout_height="wrap_content"
                 android:layout_marginLeft="10dp"
                 android:text="Mohamed Abdelrazek"
-                android:textColor="@color/black"
+                android:textColor="@color/user_name"
                 android:textSize="30sp"
                 android:textStyle="bold" />
 
@@ -40,11 +41,11 @@
         android:id="@+id/content"
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
-        android:layout_marginLeft="20dp"
+        android:layout_marginLeft="50dp"
         android:layout_marginRight="20dp"
         android:layout_marginTop="5dp"
         android:text="schools like Stanford and Yale - no application required. Build career skills in data"
-        android:textColor="@color/black"
+        android:textColor="@color/content"
         android:textSize="15sp"
         android:typeface="sans" />
 
