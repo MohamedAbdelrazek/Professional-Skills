@@ -127,7 +127,7 @@ public class LoginActivity extends AppCompatActivity implements LoaderManager.Lo
 
         zEmail = _emailText.getText().toString();
         zPassword = _passwordText.getText().toString();
-/*
+
 
         // I disabled checking for email format to be able to send usernames
 
@@ -144,7 +144,7 @@ public class LoginActivity extends AppCompatActivity implements LoaderManager.Lo
         } else {
             _passwordText.setError(null);
         }
- */
+
         return valid;
     }
 

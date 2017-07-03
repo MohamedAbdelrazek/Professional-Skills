@@ -27,7 +27,6 @@ import com.oneteam.graduationproject.models.UserModel;
 import java.io.IOException;
 import java.net.URL;
 import java.util.ArrayList;
-import java.util.Collections;
 
 public class HomeActivity extends AppCompatActivity implements LoaderManager.LoaderCallbacks<ArrayList<QuestionModel>> {
     private UserSession zUserSession;
@@ -76,15 +75,18 @@ public class HomeActivity extends AppCompatActivity implements LoaderManager.Loa
                         startActivity(intent);
                         drawerLayout.closeDrawers();
                         break;
-                    case R.id.settings:
-                        drawerLayout.closeDrawers();
-                        Toast.makeText(getApplicationContext(), "Settings", Toast.LENGTH_SHORT).show();
-                        break;
+
                     case R.id.search:
                         drawerLayout.closeDrawers();
                         Toast.makeText(HomeActivity.this, "Searching !", Toast.LENGTH_SHORT).show();
                         Intent intent2 = new Intent(getApplicationContext(), SearchActivity.class);
                         startActivity(intent2);
+                        break;
+                    case R.id.skills:
+                        drawerLayout.closeDrawers();
+                        Toast.makeText(HomeActivity.this, "Searching !", Toast.LENGTH_SHORT).show();
+                        Intent intent3 = new Intent(getApplicationContext(), SkillsActivity.class);
+                        startActivity(intent3);
                         break;
                     case R.id.logout:
                         drawerLayout.closeDrawers();
@@ -162,7 +164,8 @@ public class HomeActivity extends AppCompatActivity implements LoaderManager.Loa
     @Override
     public void onLoadFinished(Loader<ArrayList<QuestionModel>> loader, ArrayList<QuestionModel> data) {
 
-        Collections.reverse(data);
+
+     //   Collections.reverse(data);
         mAdapter = new PostsAdapter(data, new PostsAdapter.onRecyclerClickListener() {
             @Override
             public void onClick(QuestionModel questionModel) {

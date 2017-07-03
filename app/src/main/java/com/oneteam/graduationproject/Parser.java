@@ -4,6 +4,7 @@ import android.util.Log;
 
 import com.oneteam.graduationproject.models.CommentModel;
 import com.oneteam.graduationproject.models.QuestionModel;
+import com.oneteam.graduationproject.models.SkillModel;
 import com.oneteam.graduationproject.models.UserModel;
 
 import org.json.JSONArray;
@@ -39,6 +40,8 @@ public class Parser {
 
         } catch (JSONException e) {
             e.printStackTrace();
+        }catch (Exception e) {
+            e.printStackTrace();
         }
 
 
@@ -61,6 +64,8 @@ public class Parser {
 
 
         } catch (JSONException e) {
+            Log.i("ZOKA", "" + e.getMessage());
+        } catch (Exception e) {
             Log.i("ZOKA", "" + e.getMessage());
         }
 
@@ -93,11 +98,40 @@ public class Parser {
 
         } catch (JSONException e) {
             e.printStackTrace();
+        }catch (Exception e) {
+            e.printStackTrace();
         }
 
 
         return list;
 
 
+    }
+
+    public static ArrayList<SkillModel> getUSerSkills(String JsonSkillResponse) {
+        ArrayList<SkillModel> skillModels = new ArrayList<>();
+
+        try {
+            JSONObject jsonObject = new JSONObject(JsonSkillResponse);
+
+            JSONArray skills = jsonObject.getJSONArray("skillModel");
+
+            for (int i = 0; i < skills.length(); i++) {
+                SkillModel skillModel = new SkillModel();
+
+                JSONObject c = skills.getJSONObject(i);
+                skillModel.setSkillName(c.getString("skillName"));
+                skillModel.setSkillId(Integer.parseInt(c.getString("skillId")));
+                skillModel.setUserId(c.getString("skillId"));
+                skillModels.add(skillModel);
+            }
+
+            return skillModels;
+        } catch (JSONException e) {
+            e.printStackTrace();
+        } catch (Exception e) {
+            e.printStackTrace();
+        }
+        return null;
     }
 }

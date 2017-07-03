@@ -164,4 +164,18 @@ public class NetworkUtils {
     }
 
 
+    public static URL getUserSkillsUrl(String id) {
+
+        String ss = "" + Constant.USER_SKILLS + "/" + id;
+        Uri builtUri = Uri.parse(ss).buildUpon().build();
+        URL url = null;
+        try {
+            url = new URL(builtUri.toString());
+        } catch (MalformedURLException e) {
+            e.printStackTrace();
+        }
+
+
+        return url;
+    }
 }

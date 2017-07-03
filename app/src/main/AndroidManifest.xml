@@ -43,9 +43,15 @@
                 android:name="android.support.PARENT_ACTIVITY"
                 android:value=".HomeActivity" />
         </activity>
-        <activity android:name=".CommentActivity"
-            android:label="Comments"
-            ></activity>
+        <activity
+            android:name=".CommentActivity"
+            android:label="Comments" />
+        <activity
+            android:name=".SkillsActivity"
+            android:label="Your Skills">
+
+
+        </activity>
     </application>
 
 </manifest>

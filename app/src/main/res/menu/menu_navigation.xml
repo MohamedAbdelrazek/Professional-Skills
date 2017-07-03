@@ -20,9 +20,9 @@
         android:id="@+id/menu_bottom"
         android:checkableBehavior="none">
         <item
-            android:id="@+id/settings"
+            android:id="@+id/skills"
             android:icon="@drawable/settings"
-            android:title="Settings" />
+            android:title="Manage Skills" />
 
         <item
             android:id="@+id/logout"

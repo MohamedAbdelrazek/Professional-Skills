@@ -6,8 +6,11 @@ package com.oneteam.graduationproject.Utils;
 
 public class Constant {
     public static final String LOGIN_URL = "https://professionalskillsapiii.eu-gb.mybluemix.net/restapi/user/login?";
+    public static final String SKILL_NAME = "skillName";
     public static String REGISTER_URL = "https://professionalskillsapiii.eu-gb.mybluemix.net/restapi/user/register";
     public static String ADD_QUESTION_URL = "https://professionalskillsapiii.eu-gb.mybluemix.net/restapi/question/add";
+    public static String ADD_SKILL_URL = "https://professionalskillsapiii.eu-gb.mybluemix.net/restapi/skill/addskill/";
+    public static String REMOVE_SKILL_URL = "https://professionalskillsapiii.eu-gb.mybluemix.net/restapi/skill/deleteskill/";
     public static String ADD_COMMENT_URL = "https://professionalskillsapiii.eu-gb.mybluemix.net/restapi/question/comment/add";
     public static final String KEY_EMAIL = "userName";
     public static final String KEY_PASSWORD = "userPassword";
@@ -24,13 +27,12 @@ public class Constant {
     public static final String QAUTHORNAME = "author_name";
 
 
-
-
     public static final String ALL_USERS_URL = "https://professionalskillsapiii.eu-gb.mybluemix.net/restapi/user";
     public static String SPECIFIC_USER_URL = "https://professionalskillsapiii.eu-gb.mybluemix.net/restapi/user/username";
     public static String ALL_POSTS = "https://professionalskillsapiii.eu-gb.mybluemix.net/restapi/question";
     public static String USER_POSTS = "https://professionalskillsapiii.eu-gb.mybluemix.net/restapi/question/user/";
     public static String USER_COMMENTS = "https://professionalskillsapiii.eu-gb.mybluemix.net/restapi/question/comment/";
+    public static String USER_SKILLS = "https://professionalskillsapiii.eu-gb.mybluemix.net/restapi/skill/";
 
 
 }

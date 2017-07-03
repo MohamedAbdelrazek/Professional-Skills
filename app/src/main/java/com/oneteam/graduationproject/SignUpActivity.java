@@ -186,7 +186,7 @@ public class SignUpActivity extends AppCompatActivity {
         zUser.setMobileNumber(zMobileNumber.getText().toString());
         zUser.setPassword(zPassword.getText().toString());
 
-        /*
+
         if (zUser.getFirstName().isEmpty() || zUser.getFirstName().length() < 3) {
             zFirstName.setError("at least 3 characters");
             valid = false;
@@ -221,7 +221,5 @@ public class SignUpActivity extends AppCompatActivity {
         return valid;
     }
 
-*/
-        return valid;
-    }
+
 }
