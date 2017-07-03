@@ -52,8 +52,6 @@ public class SearchActivity extends AppCompatActivity implements LoaderManager.L
         mRecyclerView.setHasFixedSize(true);
         RecyclerView.LayoutManager layoutManager = new LinearLayoutManager(this);
         mRecyclerView.setLayoutManager(layoutManager);
-
-
     }
 
     @Override
@@ -88,7 +86,12 @@ public class SearchActivity extends AppCompatActivity implements LoaderManager.L
                         userModel.setMobileNumber(c.getString("phone"));
                         userModel.setEmailAddress(c.getString("userName"));
                         userModel.setId(c.getString("userId"));
-
+                        if (!c.isNull("address")) {
+                            userModel.setAddress(c.getString("address"));
+                        }
+                        if (!c.isNull("mainSkill")) {
+                            userModel.setMainSkill(c.getString("mainSkill"));
+                        }
                         userModelArrayList.add(userModel);
                     }
 

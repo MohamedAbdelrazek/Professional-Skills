@@ -12,6 +12,15 @@ public class UserModel {
     private String Password;
     private String Address;
     private String Id;
+    private String mainSkill;
+
+    public String getMainSkill() {
+        return mainSkill;
+    }
+
+    public void setMainSkill(String mainSkill) {
+        this.mainSkill = mainSkill;
+    }
 
     public String getId() {
         return Id;
@@ -69,4 +78,6 @@ public class UserModel {
     public void setAddress(String address) {
         Address = address;
     }
+
+
 }
