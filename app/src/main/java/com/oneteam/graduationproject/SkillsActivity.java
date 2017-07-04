@@ -64,6 +64,8 @@ public class SkillsActivity extends AppCompatActivity {
             public void onClick(View v) {
                 addSkill(addSkillTitleEditTxt.getText().toString());
                 getSupportLoaderManager().restartLoader(SKILLS_LOADER_ID, null, userSkillsLoader);
+                addSkillTitleEditTxt.setText("");
+
 
             }
         });
